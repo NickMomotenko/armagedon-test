@@ -1,18 +1,44 @@
 import React, { useState, useEffect } from "react";
 
-const key = `GcUkWz2JcrSWivoakXYfMYKxTwIhothr5eJctBP0`;
+import { useHistory } from "react-router";
 
-// const path = `https://api.nasa.gov/planetary/apod?api_key=${key}&count=3`;
-const path = `https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=${key}`;
+import { getDate } from "../utils";
+
+const key = `GcUkWz2JcrSWivoakXYfMYKxTwIhothr5eJctBP0`;
+// const path = `https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=${key}`;
+const path = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${getDate()}&end_date=${`2021-04-25`}&api_key=${key}`;
 
 export const useData = () => {
   const [data, setData] = useState();
+  const [currentItemFromData, setCurrentItemFromData] = useState({});
+  const [limitCounter, setLimitCounter] = useState(0);
+  const limit = 5;
 
-  useEffect(() => {
+  const history = useHistory();
+
+  const fetchedData = () => {
     fetch(path)
       .then((response) => response.json())
-      .then((data) => setData(data));
+      .then((data) => {
+        let newData = Object.values(data?.near_earth_objects);
+        let flatData = newData.flat().slice(0, limit);
+
+        setData(flatData);
+      });
+  };
+
+  const filterData = (flag) => {
+    // подумать над оптимизацией
+    if (flag) {
+      setData(data?.filter((item) => item.is_potentially_hazardous_asteroid));
+    } else {
+      fetchedData();
+    }
+  };
+
+  useEffect(() => {
+    fetchedData();
   }, []);
 
-  return { data };
+  return { data, setData, filterData, currentItemFromData };
 };

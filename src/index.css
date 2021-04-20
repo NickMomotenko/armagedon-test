@@ -1,3 +1,17 @@
+@font-face {
+  font-family: "Helvetica";
+  src: url("./fonts/HelveticaRegular.woff") format("woff");
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "HelveticaBold";
+  src: url("./fonts/HelveticaBold.woff") format("woff");
+  font-style: normal;
+  font-weight: 700;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -7,6 +21,7 @@ html, body {
   width: 100%;
   margin: 0;
   padding: 0;
+  font-family: "Helvetica";
 }
 
 ul, li {
@@ -15,8 +30,16 @@ ul, li {
   padding: 0;
 }
 
-a{
+a {
   text-decoration: none;
+  color: #000000;
+}
+
+button {
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  border:1px solid transparent;
 }
 
 #root {

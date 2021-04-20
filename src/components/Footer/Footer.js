@@ -6,7 +6,10 @@ import { useCurrentDate } from "../../hooks/currentDate";
 
 import Text from "../../UI/Text/Text";
 
-const FooterWrapp = styled.footer``;
+const FooterWrapp = styled.footer`
+  text-align: center;
+  margin-top: 45px;
+`;
 
 const Footer = () => {
   const { date } = useCurrentDate();

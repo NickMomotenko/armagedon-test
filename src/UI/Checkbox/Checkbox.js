@@ -21,8 +21,8 @@ const CheckboxFakeStatus = styled.div`
   &:before {
     content: "";
     display: inline-block;
-    height: 9px;
-    width: 9px;
+    height: 10px;
+    width: 10px;
     background: url(${checkboxIcon}) center no-repeat;
 
     visibility: ${(props) => (props.checked ? "visible" : "hidden")};
@@ -34,21 +34,14 @@ const CheckboxFakeStatus = styled.div`
   }
 `;
 
-const Checkbox = () => {
-  const [checked, setChecked] = useState(null);
-
-  const checkboxRef = React.useRef();
-
-  React.useEffect(() => {
-    setChecked(checkboxRef.current.checked);
-  }, []);
-
+const Checkbox = ({ name, checked,  onChange, ...props }) => {
   return (
-    <CheckboxWrapp>
+    <CheckboxWrapp {...props}>
       <CheckboxTrue
         type="checkbox"
-        ref={checkboxRef}
-        onChange={(e) => setChecked(e.currentTarget.checked)}
+        checked={checked}
+        name={name}
+        onChange={onChange}
       />
       <CheckboxFakeStatus checked={checked} />
     </CheckboxWrapp>

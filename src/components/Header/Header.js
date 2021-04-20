@@ -2,35 +2,30 @@ import React from "react";
 
 import styled from "styled-components";
 
-import { Row, Block, Label } from "../../UI/Layout/Layout";
+import { Row, Block } from "../../UI/Layout/Layout";
 import Text from "../../UI/Text/Text";
-import Checkbox from "../../UI/Checkbox/Checkbox";
+
 import Menu from "../Menu/Menu";
 
-const HeaderWrapp = styled.header``;
+const HeaderWrapp = styled.header`
+  padding-bottom: 24px;
+  border-bottom: 1px solid #000000;
+  margin-bottom: 25px;
+`;
 
 const Header = () => {
   return (
     <HeaderWrapp>
       <Row btw>
-        <Block>
-          <Row>
-            <Text text="ARMAGGEDON V" />
-            {/* <Menu /> */}
+        <Block style={{ width: "100%" }}>
+          <Row center btw style={{ marginBottom: "10px" }}>
+            <Text text="ARMAGGEDON V" fontSize="32px" />
+            <Menu />
           </Row>
-          <Text text="Сервис мониторинга и уничтожения астероидов, опасно подлетающих к Земле." />
-
-          <Row btw>
-            <Label>
-              <Row as="span">
-                <Checkbox />
-                <Text text="Показать только опасные" />
-              </Row>
-            </Label>
-            <Block>
-              <Text text="Расстояние в километрах, в дистанциях до луны" />
-            </Block>
-          </Row>
+          <Text
+            text="Сервис мониторинга и уничтожения астероидов, опасно подлетающих к Земле."
+            style={{ maxWidth: "420px" }}
+          />
         </Block>
         <Block></Block>
       </Row>
