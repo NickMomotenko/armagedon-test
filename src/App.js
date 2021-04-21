@@ -20,19 +20,18 @@ import Checkbox from "./UI/Checkbox/Checkbox";
 import DestrictionPage from "./pages/DestrictionPage";
 import MainPage from "./pages/MainPage";
 import More from "./pages/More";
+import { withData } from "./context/withData";
 
 const AppWrapp = styled.div``;
 
-const App = () => {
+const App = (props) => {
   const [moreDetails, setMoreDetails] = React.useState();
 
-  const { data, filterData } = useData();
+  let { data, filterData } = props;
+
+  // const { data, filterData } = useData();
 
   const dangerCheckbox = useCheckbox();
-
-  // const target = useRef(null);
-
-  // const intersecting = useIntersection(target, callback: ()=>{});
 
   return (
     <AppWrapp>
@@ -72,11 +71,10 @@ const App = () => {
             />
           </Route>
         </Switch>
-        {/* <div ref={target}>{intersecting ? "true" : "false"}</div> */}
         <Footer />
       </Container>
     </AppWrapp>
   );
 };
 
-export default App;
+export default withData(App);

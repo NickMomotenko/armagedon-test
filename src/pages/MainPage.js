@@ -4,6 +4,8 @@ import styled from "styled-components";
 
 import { useHistory, useLocation } from "react-router";
 
+import { InView } from "react-intersection-observer";
+
 import { useScroll } from "../hooks/scroll";
 
 import Spinner from "../UI/Loader/Loader";
@@ -12,12 +14,21 @@ import { Block } from "../UI/Layout/Layout";
 import Item from "../components/Item/Item";
 
 import { withData } from "../context/withData";
+import { useData } from "../hooks/data";
 
 const MainPageWrapp = styled.div``;
 
-const MainPage = ({ list, setCurrent, addItemToDesctrictionList }) => {
+const MainPage = (props) => {
   const history = useHistory();
   const location = useLocation();
+
+  let {
+    list,
+    setCurrent,
+    addItemToDesctrictionList,
+    limitCounter,
+    setLimitCounter,
+  } = props;
 
   if (!list) return <Spinner />;
 
@@ -37,7 +48,16 @@ const MainPage = ({ list, setCurrent, addItemToDesctrictionList }) => {
           />
         ))}
       </Block>
-      <div>fsafsasfasafafsfas</div>
+      <InView
+        as="div"
+        onChange={(inView) => {
+          if (inView) {
+            setLimitCounter(limitCounter + 5);
+          }
+        }}
+      >
+        fsafsasfasafafsfas
+      </InView>
     </MainPageWrapp>
   );
 };

@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import { useHistory } from "react-router";
-
 import { getDate } from "../utils";
 
 const key = `GcUkWz2JcrSWivoakXYfMYKxTwIhothr5eJctBP0`;
@@ -10,18 +8,14 @@ const path = `https://api.nasa.gov/neo/rest/v1/feed?start_date=${getDate()}&end_
 
 export const useData = () => {
   const [data, setData] = useState();
-  const [currentItemFromData, setCurrentItemFromData] = useState({});
-  const [limitCounter, setLimitCounter] = useState(0);
-  const limit = 5;
-
-  const history = useHistory();
+  const [limitCounter, setLimitCounter] = useState(5);
 
   const fetchedData = () => {
     fetch(path)
       .then((response) => response.json())
       .then((data) => {
         let newData = Object.values(data?.near_earth_objects);
-        let flatData = newData.flat().slice(0, limit);
+        let flatData = newData.flat().slice(0, limitCounter);
 
         setData(flatData);
       });
@@ -40,5 +34,5 @@ export const useData = () => {
     fetchedData();
   }, []);
 
-  return { data, setData, filterData, currentItemFromData };
+  return { data, setData, filterData, setLimitCounter, limitCounter };
 };
