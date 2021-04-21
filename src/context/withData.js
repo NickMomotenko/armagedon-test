@@ -11,7 +11,7 @@ export const DataContext = React.createContext();
 export const DataProvider = ({ children }) => {
   const [destrictionList, setDestrictionList] = React.useState([]);
   const [data, setData] = useState([]);
-  const [limitCounter, setLimitCounter] = useState(0);
+  const [limitCounter, setLimitCounter] = useState(5);
 
   useEffect(() => {
     fetchedData();
