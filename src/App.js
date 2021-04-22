@@ -1,12 +1,11 @@
-import React, { useState, useRef } from "react";
+import React from "react";
 
 import styled, { css } from "styled-components";
 import { Switch, Route } from "react-router-dom";
 
-import { useIntersection } from "use-intersection";
+import { withData } from "./context/withData";
 
-import { useData, checkPotentialHazardousAsteroid } from "./hooks/data";
-import { useDestrictionList } from "./hooks/destructionList";
+import { useMobileWidth } from "./hooks/mobile";
 import { useCheckbox } from "./hooks/checkbox";
 
 import Container from "./components/Container/Container";
@@ -20,39 +19,51 @@ import Checkbox from "./UI/Checkbox/Checkbox";
 import DestrictionPage from "./pages/DestrictionPage";
 import MainPage from "./pages/MainPage";
 import More from "./pages/More";
-import { withData } from "./context/withData";
 
-const AppWrapp = styled.div``;
+const AppWrapp = styled.div`
+  ${(props) => props.isMobile && `padding:16px`}
+`;
 
 const App = (props) => {
   const [moreDetails, setMoreDetails] = React.useState();
 
-  let { data, filterData } = props;
-
-  // const { data, filterData } = useData();
+  let { data, setData, newArr, setNewArr, limitCounter } = props;
 
   const dangerCheckbox = useCheckbox();
 
+  let { width } = useMobileWidth();
+
+  let isMobile = width <= 480 ? true : false;
+
   return (
-    <AppWrapp>
+    <AppWrapp isMobile={isMobile}>
       <Container>
         <Header />
         <Row btw style={{ marginBottom: "22px" }}>
           <Label>
-            <Row as="span">
+            <Row as="span" style={{ flexDirection: isMobile && `row` }}>
               <Checkbox
                 style={{ marginRight: "10px" }}
                 checked={dangerCheckbox.checked}
                 name="danger"
                 onChange={(event) => {
                   dangerCheckbox.onChange(event);
-                  filterData(event.target.checked);
+                  // filterData(event.target.checked);
+                  if (!event.target.checked) {
+                    setNewArr(data.slice(0, limitCounter));
+                  } else {
+                    setNewArr(
+                      newArr.filter(
+                        (item) => item.is_potentially_hazardous_asteroid
+                      )
+                    );
+                  }
                 }}
               />
               <Text text="Показать только опасные" />
             </Row>
           </Label>
-          <Block>
+          <Block style={{ marginTop: isMobile && `14px` }}>
             <Text text="Расстояние в километрах, в дистанциях до луны" />
           </Block>
         </Row>
@@ -65,7 +76,7 @@ const App = (props) => {
           </Route>
           <Route path="/">
             <MainPage
-              list={data}
+              list={newArr}
               current={moreDetails}
               setCurrent={setMoreDetails}
             />

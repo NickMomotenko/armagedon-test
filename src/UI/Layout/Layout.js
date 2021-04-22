@@ -9,6 +9,12 @@ const RowWrapp = styled.div`
 
   ${(props) => props.center && `align-items:center`};
   ${(props) => props.btw && `justify-content:space-between`};
+
+  @media (max-width: 480px){
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:flex-start;
+  }
 `;
 
 const PaperWrapp = styled.div`

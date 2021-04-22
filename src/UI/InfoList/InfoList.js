@@ -3,6 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 import { dateFormat } from "../../utils";
+import Text from "../Text/Text";
 
 const InfoListItem = styled.li``;
 
@@ -16,6 +17,10 @@ const InfoListWrapp = styled.ul`
     display: flex;
     margin-bottom: 0.5em;
     width: 100%;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
 
     &::before {
       content: "";
@@ -31,7 +36,7 @@ const InfoListWrapp = styled.ul`
   }
 `;
 
-const InfoList = ({ date, size, distance }) => {
+const InfoList = ({ date, size, distance, flag, item }) => {
   return (
     <InfoListWrapp>
       <InfoListItem>
@@ -43,6 +48,45 @@ const InfoList = ({ date, size, distance }) => {
       <InfoListItem>
         Размер<InfoListValue>{`${Math.round(size)} м`}</InfoListValue>
       </InfoListItem>
+      {flag && (
+        <>
+          <InfoListItem>
+            Абсолютная звездная величина
+            <InfoListValue>{item?.absolute_magnitude_h}</InfoListValue>
+          </InfoListItem>
+          <InfoListItem>
+            Центрический объект
+            <InfoListValue>
+              {item?.is_sentry_object ? "да" : "нет"}
+            </InfoListValue>
+          </InfoListItem>
+        </>
+      )}
+      {flag && (
+        <>
+          <Text text="Данные о приближении:" />
+          {item?.close_approach_data.map((item, index) => (
+            <>
+              <InfoListItem key={index}>
+                Дата
+                <InfoListValue>{item?.close_approach_date}</InfoListValue>
+              </InfoListItem>
+              <InfoListItem>
+                Летит вокруг
+                <InfoListValue>{item?.orbiting_body}</InfoListValue>
+              </InfoListItem>
+              <InfoListItem>
+                Cкорость
+                <InfoListValue>{`${Math.round(item?.relative_velocity?.kilometers_per_hour)} км/ч`}</InfoListValue>
+              </InfoListItem>
+              <InfoListItem>
+                Растояние от Луны
+                <InfoListValue>{`${Math.round(item?.miss_distance?.lunar)}`}</InfoListValue>
+              </InfoListItem>
+            </>
+          ))}
+        </>
+      )}
     </InfoListWrapp>
   );
 };

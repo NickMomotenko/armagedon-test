@@ -30,7 +30,7 @@ const MainPage = (props) => {
     setLimitCounter,
   } = props;
 
-  if (!list) return <Spinner />;
+  if (list.length <= 0) return <Spinner />;
 
   return (
     <MainPageWrapp>
@@ -48,7 +48,7 @@ const MainPage = (props) => {
           />
         ))}
       </Block>
-      <InView
+      {/* <InView
         as="div"
         onChange={(inView) => {
           if (inView) {
@@ -57,7 +57,7 @@ const MainPage = (props) => {
         }}
       >
         fsafsasfasafafsfas
-      </InView>
+      </InView> */}
     </MainPageWrapp>
   );
 };
