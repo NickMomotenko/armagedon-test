@@ -4,6 +4,8 @@ import styled, { css } from "styled-components";
 
 import { generateSizeForIcon } from "../../utils";
 
+import { useMobileWidth } from "../../hooks/mobile";
+
 import Text from "../../UI/Text/Text";
 import LabelText from "../../UI/LabelText/LabelText";
 import InfoList from "../../UI/InfoList/InfoList";
@@ -12,7 +14,7 @@ import { Block, Row } from "../../UI/Layout/Layout";
 
 import dinoIcon from "../../assets/dino.png";
 import kamenIcon from "../../assets/kamen1.svg";
-import { useMobileWidth } from "../../hooks/mobile";
+
 
 const ItemWrapp = styled.div`
   background-color: ${(props) => props.color};
@@ -127,7 +129,7 @@ const ItemImage = styled.img.attrs(() => ({ src: kamenIcon }))`
 `;
 
 const Item = ({ item, addItemToDesctrictionList, moreDetails, location }) => {
-  let isPageMore = location.pathname === "/more" ? true : false;
+  // let isPageMore = location.pathname === "/more" && true;
 
   let { width } = useMobileWidth();
 
@@ -156,7 +158,6 @@ const Item = ({ item, addItemToDesctrictionList, moreDetails, location }) => {
               date={item?.close_approach_data[0]?.close_approach_date}
               size={item?.estimated_diameter?.meters?.estimated_diameter_min}
               distance={item?.close_approach_data[0]?.miss_distance?.kilometers}
-              flag={isPageMore}
               item={item}
             />
           </Block>
@@ -195,7 +196,6 @@ const Item = ({ item, addItemToDesctrictionList, moreDetails, location }) => {
               date={item?.close_approach_data[0]?.close_approach_date}
               size={item?.estimated_diameter?.meters?.estimated_diameter_min}
               distance={item?.close_approach_data[0]?.miss_distance?.kilometers}
-              flag={isPageMore}
               item={item}
             />
           </Block>

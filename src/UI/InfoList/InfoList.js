@@ -1,8 +1,10 @@
 import React from "react";
+import { useLocation } from "react-router";
 
 import styled from "styled-components";
 
 import { dateFormat } from "../../utils";
+
 import Text from "../Text/Text";
 
 const InfoListItem = styled.li``;
@@ -36,7 +38,9 @@ const InfoListWrapp = styled.ul`
   }
 `;
 
-const InfoList = ({ date, size, distance, flag, item }) => {
+const InfoList = ({ date, size, distance, item }) => {
+  let location = useLocation();
+  let isPageMore = location.pathname === "/more" ? true : false;
   return (
     <InfoListWrapp>
       <InfoListItem>
@@ -48,7 +52,7 @@ const InfoList = ({ date, size, distance, flag, item }) => {
       <InfoListItem>
         Размер<InfoListValue>{`${Math.round(size)} м`}</InfoListValue>
       </InfoListItem>
-      {flag && (
+      {isPageMore ? (
         <>
           <InfoListItem>
             Абсолютная звездная величина
@@ -61,8 +65,10 @@ const InfoList = ({ date, size, distance, flag, item }) => {
             </InfoListValue>
           </InfoListItem>
         </>
+      ) : (
+        <></>
       )}
-      {flag && (
+      {isPageMore ? (
         <>
           <Text text="Данные о приближении:" />
           {item?.close_approach_data.map((item, index) => (
@@ -77,15 +83,21 @@ const InfoList = ({ date, size, distance, flag, item }) => {
               </InfoListItem>
               <InfoListItem>
                 Cкорость
-                <InfoListValue>{`${Math.round(item?.relative_velocity?.kilometers_per_hour)} км/ч`}</InfoListValue>
+                <InfoListValue>{`${Math.round(
+                  item?.relative_velocity?.kilometers_per_hour
+                )} км/ч`}</InfoListValue>
               </InfoListItem>
               <InfoListItem>
                 Растояние от Луны
-                <InfoListValue>{`${Math.round(item?.miss_distance?.lunar)}`}</InfoListValue>
+                <InfoListValue>{`${Math.round(
+                  item?.miss_distance?.lunar
+                )}`}</InfoListValue>
               </InfoListItem>
             </>
           ))}
         </>
+      ) : (
+        <></>
       )}
     </InfoListWrapp>
   );

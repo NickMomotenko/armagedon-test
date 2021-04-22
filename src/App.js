@@ -27,7 +27,7 @@ const AppWrapp = styled.div`
 const App = (props) => {
   const [moreDetails, setMoreDetails] = React.useState();
 
-  let { data, setData, newArr, setNewArr, limitCounter } = props;
+  let { data, newArr, setNewArr, limitCounter, setIsVisible } = props;
 
   const dangerCheckbox = useCheckbox();
 
@@ -48,10 +48,11 @@ const App = (props) => {
                 name="danger"
                 onChange={(event) => {
                   dangerCheckbox.onChange(event);
-                  // filterData(event.target.checked);
                   if (!event.target.checked) {
+                    setIsVisible(true);
                     setNewArr(data.slice(0, limitCounter));
                   } else {
+                    setIsVisible(false);
                     setNewArr(
                       newArr.filter(
                         (item) => item.is_potentially_hazardous_asteroid

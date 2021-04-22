@@ -12,6 +12,7 @@ export const DataProvider = ({ children }) => {
   const [data, setData] = useState([]);
   const [newArr, setNewArr] = useState([]);
   const [limitCounter, setLimitCounter] = useState(5);
+  const [isVisibile, setIsVisible] = useState(true);
 
   useEffect(() => {
     fetchedData();
@@ -20,6 +21,10 @@ export const DataProvider = ({ children }) => {
   useEffect(() => {
     setNewArr(data.slice(0, limitCounter));
   }, [data]);
+
+  useEffect(() => {
+    setNewArr(data.slice(0, limitCounter));
+  }, [limitCounter]);
 
   function fetchedData() {
     fetch(path)
@@ -31,15 +36,6 @@ export const DataProvider = ({ children }) => {
         setData(flatData);
       });
   }
-
-  const filterData = (flag) => {
-    // подумать над оптимизацией
-    // if (flag) {
-    //   setData(data?.filter((item) => item.is_potentially_hazardous_asteroid));
-    // } else {
-    //   fetchedData();
-    // }
-  };
 
   const addItemToDesctrictionList = (item) => {
     setDestrictionList([...destrictionList, item]);
@@ -56,7 +52,8 @@ export const DataProvider = ({ children }) => {
         setNewArr,
         setLimitCounter,
         limitCounter,
-        fetchedData,
+        isVisibile,
+        setIsVisible
       }}
     >
       {children}

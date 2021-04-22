@@ -28,6 +28,7 @@ const MainPage = (props) => {
     addItemToDesctrictionList,
     limitCounter,
     setLimitCounter,
+    isVisibile,
   } = props;
 
   if (list.length <= 0) return <Spinner />;
@@ -48,16 +49,18 @@ const MainPage = (props) => {
           />
         ))}
       </Block>
-      {/* <InView
-        as="div"
-        onChange={(inView) => {
-          if (inView) {
-            setLimitCounter(limitCounter + 5);
-          }
-        }}
-      >
-        fsafsasfasafafsfas
-      </InView> */}
+      {isVisibile ? (
+        <InView
+          as="div"
+          onChange={(inView) => {
+            if (inView) setLimitCounter((prev) => prev + 5);
+          }}
+        >
+          fsafsasfasafafsfas
+        </InView>
+      ) : (
+        <></>
+      )}
     </MainPageWrapp>
   );
 };
